@@ -10,11 +10,17 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<header className="App-header">
-					<NavBar />
-					<PageAccueil />
-				</header>
 				<Routes>
+					<Route
+						path="/"
+						element={
+							<header className="App-header">
+								<NavBar />
+								<PageAccueil />
+							</header>
+						}
+					></Route>
+
 					<Route path="/Carnets" element={<Carnets />}></Route>
 				</Routes>
 			</Router>
