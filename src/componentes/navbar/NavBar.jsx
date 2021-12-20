@@ -31,14 +31,19 @@ export default function NavBar() {
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 							<li className="nav-item active">
+								<Nav.Link as={NavLink} to="/">
+									<b>Home</b>
+								</Nav.Link>
+							</li>
+							<li className="nav-item active">
 								<Nav.Link as={NavLink} to="/Carnets">
 									<b>Carnets</b>
 								</Nav.Link>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">
-									<b>Catégorie</b>
-								</a>
+								<Nav.Link as={NavLink} to="/AjoutCategorie">
+									<b>Catégories</b>
+								</Nav.Link>
 							</li>
 							<li className="nav-item">
 								<a className="nav-link active" aria-current="page" href="#">

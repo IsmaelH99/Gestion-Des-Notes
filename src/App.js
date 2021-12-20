@@ -1,10 +1,11 @@
 import "./../src/assets/logo-my-notes.png";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import PageAccueil from "./componentes/PageAccueil";
+import Home from "./componentes/Home";
 import NavBar from "./componentes/navbar/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Carnets from "./componentes/carnets/Carnets";
+import AjoutCategorie from "./componentes/categories/AjoutCategorie";
 
 function App() {
 	return (
@@ -16,12 +17,13 @@ function App() {
 						element={
 							<header className="App-header">
 								<NavBar />
-								<PageAccueil />
+								<Home />
 							</header>
 						}
 					></Route>
 
 					<Route path="/Carnets" element={<Carnets />}></Route>
+					<Route path="/AjoutCategorie" element={<AjoutCategorie />}></Route>
 				</Routes>
 			</Router>
 		</div>
