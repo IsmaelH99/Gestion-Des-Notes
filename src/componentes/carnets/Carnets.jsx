@@ -1,9 +1,11 @@
 import { useState } from "react";
 import NavBar from "../navbar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Carnets() {
 	const [categories, setCategories] = useState([]);
 	const [inputCategorie, setInputcategorie] = useState("");
+	const navigator = useNavigate();
 
 	function AddCategorie() {
 		let tmp = [...categories];
@@ -12,24 +14,26 @@ export default function Carnets() {
 			setCategories(tmp);
 		}
 		setInputcategorie("");
+		// navigator("/");
 	}
 
-	// let categorie = categorie.map((categorie, i) => {
-	// 	return (
-	// 		<div class="col">
-	// 			<div class="card h-100">
-	// 				<div class="card-header text-center">
-	// 					<b> Carnet 5 </b>
-	// 				</div>
-	// 				<div class="card-body text-white bg-secondary">
-	// 					<h5 class="card-title">Card title</h5>
-	// 					<p class="card-text">This is a short card.</p>
-	// 				</div>
-	// 			</div>
-	// 		</div>
-	// 		// <Todo key={"todos-"+i} titre={todo} supprimer={supprimer} />
-	// 	);
-	// });
+	let afficheCategorie = categories.map((categorie, i) => {
+		return (
+			<div key={"categories-" + i} className="mt-5 ms-5 ">
+				<div class="col-md-4">
+					<div class="card h-100">
+						<div class="card-header text-center">
+							<b>{categorie}</b>
+						</div>
+						<div class="card-body text-white bg-secondary">
+							<h5 class="card-title">Card title</h5>
+							<p class="card-text">This is a short card.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	});
 
 	return (
 		<div>
@@ -63,6 +67,7 @@ export default function Carnets() {
 					</section>
 				</section>
 			</main>
+			{afficheCategorie}
 		</div>
 	);
 }
