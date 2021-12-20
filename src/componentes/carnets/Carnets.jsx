@@ -38,27 +38,27 @@ export default function Carnets() {
 
 	let afficheCarnet = carnets.map((carnet, i) => {
 		return (
-			<Link to="/AjoutCategorie">
-				<div key={"carnets-" + i} className="mt-3 ms-3 ">
-					<div class="col-md-4">
-						<div class="card h-100">
-							<div class="card-header text-center">
-								<b>{carnet}</b>
-							</div>
-							<div class="card-body text-white bg-secondary">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a short card.</p>
-							</div>
+			<div key={"carnets-" + i} className="mt-3 ms-3 ">
+				<div class="col-md-4">
+					<div class="card h-100">
+						<div class="card-header text-center">
+							<b>{carnet}</b>
+						</div>
+						<div class="card-body text-white bg-info">
+							<Link to="/AjoutCategorie">
+								<h5 class="card-title">+ Catégorie</h5>
+							</Link>
+							<p class="card-text">This is a short card.</p>
 						</div>
 					</div>
-					<button
-						className="btn btn-danger mt-2"
-						onClick={() => supprimer(carnet)}
-					>
-						Supprimer
-					</button>
 				</div>
-			</Link>
+				<button
+					className="btn btn-danger mt-2"
+					onClick={() => supprimer(carnet)}
+				>
+					Supprimer
+				</button>
+			</div>
 		);
 	});
 
@@ -69,7 +69,7 @@ export default function Carnets() {
 				<section className="container">
 					<section className="row">
 						<section className="col-md-8">
-							<h1 className="mt-5">Ajouter un carnet</h1>
+							<h1 className="mt-5">Ajout d'un carnet</h1>
 							<div className="input-group mb-3 mt-3">
 								<input
 									type="text"

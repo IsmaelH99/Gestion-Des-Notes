@@ -21,7 +21,7 @@ export default function AjoutCategorie() {
 		return (
 			<div key={"categories-" + i} className="mt-3">
 				<main>
-					<section className="container">
+					{/* <section className="container">
 						<section className="row">
 							<section className="col-md-8">
 								<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -37,7 +37,15 @@ export default function AjoutCategorie() {
 								</li>
 							</section>
 						</section>
-					</section>
+					</section> */}
+					<div class="col-md-4">
+						<select
+							class="form-select mt-3 ms-5"
+							aria-label="Default select example"
+						>
+							<option value="1">{categorie}</option>
+						</select>
+					</div>
 				</main>
 			</div>
 
@@ -83,15 +91,6 @@ export default function AjoutCategorie() {
 									>
 										Ajouter
 									</button>
-									<select
-										class="form-select"
-										aria-label="Default select example"
-									>
-										<option selected>Open this select menu</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-									</select>
 								</div>
 							</div>
 						</section>
