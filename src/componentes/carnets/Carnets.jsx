@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
@@ -38,25 +38,27 @@ export default function Carnets() {
 
 	let afficheCarnet = carnets.map((carnet, i) => {
 		return (
-			<div key={"carnets-" + i} className="mt-3 ms-3 ">
-				<div class="col-md-4">
-					<div class="card h-100">
-						<div class="card-header text-center">
-							<b>{carnet}</b>
-						</div>
-						<div class="card-body text-white bg-secondary">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">This is a short card.</p>
+			<Link to="/AjoutCategorie">
+				<div key={"carnets-" + i} className="mt-3 ms-3 ">
+					<div class="col-md-4">
+						<div class="card h-100">
+							<div class="card-header text-center">
+								<b>{carnet}</b>
+							</div>
+							<div class="card-body text-white bg-secondary">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">This is a short card.</p>
+							</div>
 						</div>
 					</div>
+					<button
+						className="btn btn-danger mt-2"
+						onClick={() => supprimer(carnet)}
+					>
+						Supprimer
+					</button>
 				</div>
-				<button
-					className="btn btn-danger mt-2"
-					onClick={() => supprimer(carnet)}
-				>
-					Supprimer
-				</button>
-			</div>
+			</Link>
 		);
 	});
 
@@ -68,7 +70,7 @@ export default function Carnets() {
 					<section className="row">
 						<section className="col-md-8">
 							<h1 className="mt-5">Ajouter un carnet</h1>
-							<div class="input-group mb-3 mt-3">
+							<div className="input-group mb-3 mt-3">
 								<input
 									type="text"
 									class="form-control"
@@ -82,7 +84,7 @@ export default function Carnets() {
 									<button
 										type="button"
 										onClick={AddCarnets}
-										class="btn btn-primary ms-3"
+										className="btn btn-primary ms-3"
 									>
 										Ajouter
 									</button>
