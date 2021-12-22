@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import { useNavigate, Link } from "react-router-dom";
+import ListCat from "../categories/ListCat";
 
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
@@ -32,33 +33,33 @@ export default function Carnets() {
 	function supprimer(carnet) {
 		let tmp = [...carnets];
 		const indice = carnets.indexOf(carnet);
+		console.log(indice);
 		if (indice > -1) tmp.splice(indice, 1);
 		setCarnets(tmp);
 	}
 
 	let afficheCarnet = carnets.map((carnet, i) => {
 		return (
-			<Link to="/AjoutCategorie">
-				<div key={"carnets-" + i} className="mt-3 ms-3 ">
-					<div class="col-md-4">
-						<div class="card h-100">
-							<div class="card-header text-center">
+			<div key={"carnets-" + i} className="mt-3 ms-3 ">
+				<div class="col-md-4">
+					<div class="card h-100">
+						<div class="card-header text-center">
+							<Link to="/AjoutCategorie">
 								<b>{carnet}</b>
-							</div>
-							<div class="card-body text-white bg-secondary">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a short card.</p>
-							</div>
+							</Link>
+						</div>
+						<div class="card-body text-white bg-secondary">
+							<ListCat />
 						</div>
 					</div>
-					<button
-						className="btn btn-danger mt-2"
-						onClick={() => supprimer(carnet)}
-					>
-						Supprimer
-					</button>
 				</div>
-			</Link>
+				<button
+					className="btn btn-danger mt-2"
+					onClick={() => supprimer(carnet)}
+				>
+					Supprimer
+				</button>
+			</div>
 		);
 	});
 
