@@ -44,12 +44,22 @@ export default function Carnets() {
 				<div class="col-md-4">
 					<div class="card h-100">
 						<div class="card-header text-center">
+<<<<<<< HEAD
 							<Link to="/AjoutCategorie">
 								<b>{carnet}</b>
 							</Link>
 						</div>
 						<div class="card-body text-white bg-secondary">
 							<ListCat />
+=======
+							<b>{carnet}</b>
+						</div>
+						<div class="card-body text-white bg-info">
+							<Link to="/AjoutCategorie">
+								<h5 class="card-title">+ Catégorie</h5>
+							</Link>
+							<p class="card-text">This is a short card.</p>
+>>>>>>> 862bfb3d98e1f508aa14770511356d51908d7321
 						</div>
 					</div>
 				</div>
@@ -70,7 +80,7 @@ export default function Carnets() {
 				<section className="container">
 					<section className="row">
 						<section className="col-md-8">
-							<h1 className="mt-5">Ajouter un carnet</h1>
+							<h1 className="mt-5">Ajout d'un carnet</h1>
 							<div className="input-group mb-3 mt-3">
 								<input
 									type="text"
