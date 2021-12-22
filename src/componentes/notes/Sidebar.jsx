@@ -33,7 +33,7 @@ export default function Sidebar({
 						</button>
 					</div>
 					<div class="col-10 mb-1 small">
-						<p>{note.body && note.body.substr(0, 100) + "..."}</p>
+						<p>{note.body && note.body.substr(0, 50) + "..."}</p>
 						<small>
 							Derniere Modification{" "}
 							{new Date(note.derniereModification).toLocaleDateString("en-GB", {

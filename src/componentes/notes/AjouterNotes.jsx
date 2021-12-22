@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import Main from "./Main";
 import Sidebar from "./Sidebar";
@@ -7,6 +7,19 @@ import { v4 as uuidv4 } from "uuid";
 export default function AjouterNotes() {
 	const [notes, setNotes] = useState([]);
 	const [noteActive, setNoteActive] = useState(false);
+
+	useEffect(() => {
+		let notesBDD = localStorage.getItem("notes");
+		if (notesBDD === null) {
+			localStorage.setItem("notes", JSON.stringify([]));
+			notesBDD = [];
+		}
+		setNotes(JSON.parse(notesBDD));
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("notes", JSON.stringify(notes));
+	}, [notes]);
 
 	const AjoutNotes = () => {
 		const nouvelleNote = {
