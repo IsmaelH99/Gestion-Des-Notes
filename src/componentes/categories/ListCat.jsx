@@ -1,4 +1,4 @@
-export default function ListCat({ categorie }) {
+export default function ListCat({ categorie, ajnot }) {
 	return (
 		<div className="mt-3">
 			<main>
@@ -8,12 +8,12 @@ export default function ListCat({ categorie }) {
 							<li class="list-group-item d-flex justify-content-between align-items-center">
 								<div class="ms-2 me-auto">
 									<div class="fw-bold">
-										<b>{categorie}</b>
+										<button onClick={() => ajnot(categorie.id)}>
+											{" "}
+											<b>{categorie}</b>{" "}
+										</button>
 									</div>
 								</div>
-								{/* <span class="badge bg-primary rounded-pill">
-                                {categories.length}
-                            </span> */}
 							</li>
 						</section>
 					</section>

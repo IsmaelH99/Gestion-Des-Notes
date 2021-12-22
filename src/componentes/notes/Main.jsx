@@ -1,49 +1,38 @@
 import ReactMarkdown from "react-markdown";
-export default function Main({ noteActive, ModifierNotes }) {
-	const ModifNotes = (key, value) => {
-		ModifierNotes({
-			...noteActive,
+function Main({ activeNote, OnUpdateNote }) {
+	const OnEditField = (key, value) => {
+		OnUpdateNote({
+			...activeNote,
 			[key]: value,
-			derniereModification: Date.now(),
+			lastModified: Date.now(),
 		});
 	};
-
-	if (!noteActive)
-		return (
-			<h1 className="text-center aucune-note">Aucune note selectionnée</h1>
-		);
-
+	if (!activeNote)
+		return <div className="no-active-note">Aucune note selectionnée</div>;
 	return (
-		<div>
-			<div>
-				<div class="input-group mb-3 mt-5 ">
-					<div>
-						<input
-							id="title"
-							type="text"
-							value={noteActive && noteActive.title}
-							class="form-control"
-							onChange={(e) => ModifNotes("title", e.target.value)}
-							autoFocus
-						/>
-					</div>
-				</div>
-
-				<div class="form-floating">
-					<textarea
-						class="form-control"
-						placeholder="Ecrivez votre note ici..."
-						id="body"
-						value={noteActive && noteActive.body}
-						onChange={(e) => ModifNotes("body", e.target.value)}
-					></textarea>
-				</div>
+		<div className="app-main">
+			<div className="app-main-note-edit">
+				<input
+					type="text"
+					id="title"
+					value={activeNote && activeNote.title}
+					onChange={(e) => OnEditField("title", e.target.value)}
+					autoFocus
+				/>
+				<textarea
+					id="body"
+					value={activeNote && activeNote.body}
+					onChange={(e) => OnEditField("body", e.target.value)}
+					placeholder="Ecrivez votre note ici..."
+				/>
 			</div>
-			<hr className="mt-5" />
-			<div>
-				<h1>{noteActive && noteActive.title}</h1>
-				<ReactMarkdown>{noteActive && noteActive.body}</ReactMarkdown>
+			<div className="app-main-note-preview">
+				<h1 className="preview-title">{activeNote && activeNote.title}</h1>
+				<ReactMarkdown className="markdown-preview">
+					{activeNote && activeNote.body}
+				</ReactMarkdown>
 			</div>
 		</div>
 	);
 }
+export default Main;

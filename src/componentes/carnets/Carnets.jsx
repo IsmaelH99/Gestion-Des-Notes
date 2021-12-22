@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import { useNavigate, Link } from "react-router-dom";
-import ListCat from "../categories/ListCat";
 
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
@@ -44,22 +43,13 @@ export default function Carnets() {
 				<div class="col-md-4">
 					<div class="card h-100">
 						<div class="card-header text-center">
-<<<<<<< HEAD
 							<Link to="/AjoutCategorie">
 								<b>{carnet}</b>
 							</Link>
 						</div>
 						<div class="card-body text-white bg-secondary">
-							<ListCat />
-=======
-							<b>{carnet}</b>
-						</div>
-						<div class="card-body text-white bg-info">
-							<Link to="/AjoutCategorie">
-								<h5 class="card-title">+ Catégorie</h5>
-							</Link>
+							<h5 class="card-title">Card title</h5>
 							<p class="card-text">This is a short card.</p>
->>>>>>> 862bfb3d98e1f508aa14770511356d51908d7321
 						</div>
 					</div>
 				</div>
@@ -105,65 +95,6 @@ export default function Carnets() {
 					</section>
 				</section>
 			</main>
-			{/* <div className="mt-5 m-5 ">
-				<div class="row row-cols-1 row-cols-md-3 g-4 ">
-					<div class="col">
-						<div class="card h-100">
-							<div class="card-header text-center">
-								<b> Carnet 1 </b>
-							</div>
-							<div class="card-body text-white  bg-primary ">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a longer card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card h-100">
-							<div class="card-header text-center">
-								<b> Carnet 2 </b>
-							</div>
-							<div class="card-body text-white bg-secondary">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a short card.</p>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card h-100">
-							<div class="card-header text-center">
-								<b> Carnet 3 </b>
-							</div>
-							<div class="card-body text-white bg-success">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a longer card with supporting text below as a natural
-									lead-in to additional content.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card h-100">
-							<div class="card-header text-center">
-								<b> Carnet 4 </b>
-							</div>
-							<div class="card-body text-white bg-danger">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a longer card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> */}
 			{afficheCarnet}
 		</div>
 	);

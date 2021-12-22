@@ -9,13 +9,6 @@ export default function AjoutCategorie() {
 	const [inputCategorie, setInputcategorie] = useState("");
 	const navigator = useNavigate();
 
-	// const [activeCategorie, setActiveCategorie] = useState(false);
-
-	// const getActiveCategorie = () => {
-	// 	return categories.find((categorie) => categorie === activeCategorie);
-	// };
-	// <Carnets />;
-
 	function AddCategorie() {
 		let tmp = [...categories];
 		if (inputCategorie.trim().length > 0) {
@@ -23,60 +16,25 @@ export default function AjoutCategorie() {
 			setCategories(tmp);
 		}
 		setInputcategorie("");
-		navigator("/Carnets");
+		//navigator("/Carnets");
 	}
-
 	let afficheCategorie = categories.map((categorie, i) => {
-<<<<<<< HEAD
-		return <ListCat key={"categories-" + i} categorie={categorie} />;
-=======
 		return (
-			<div key={"categories-" + i} className="mt-3">
-				<main>
-					{/* <section className="container">
-						<section className="row">
-							<section className="col-md-8">
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-									<div class="ms-2 me-auto">
-										<div class="fw-bold">
-											<b>{categorie}</b>
-										</div>
-										Content for list item
-									</div>
-									<span class="badge bg-primary rounded-pill">
-										{categories.length}
-									</span>
-								</li>
-							</section>
-						</section>
-					</section> */}
-					<div class="col-md-4">
-						<select
-							class="form-select mt-3 ms-5"
-							aria-label="Default select example"
-						>
-							<option value="1">{categorie}</option>
-						</select>
-					</div>
-				</main>
-			</div>
-
-			// <div key={"categories-" + i} className="mt-5 ms-5 ">
-			// 	<div class="col-md-4">
-			// 		<div class="card h-100">
-			// 			<div class="card-header text-center">
-			// 				<b>{categorie}</b>
-			// 			</div>
-			// 			<div class="card-body text-white bg-secondary">
-			// 				<h5 class="card-title">Card title</h5>
-			// 				<p class="card-text">This is a short card.</p>
-			// 			</div>
-			// 		</div>
-			// 	</div>
-			// </div>
+			<ListCat key={"categories-" + i} categorie={categorie} ajnot={ajnot} />
 		);
->>>>>>> 862bfb3d98e1f508aa14770511356d51908d7321
 	});
+
+	function ajnot(categorie) {
+		const id = categorie;
+		const indice = categories.findIndex((categorie) => categorie === id);
+		let tmp = [...categories];
+
+		// const id = categorie.id;
+		// const i = users.findIndex((user) => user.id === id);
+		// const indice = categories.indexOf(categorie);
+		console.log(indice);
+		//alert("toto");
+	}
 
 	return (
 		<div>

@@ -1,73 +1,53 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import NavBar from "../navbar/NavBar";
+import "./AjouterNotes.css";
 import Main from "./Main";
 import Sidebar from "./Sidebar";
-import { v4 as uuidv4 } from "uuid";
 
-export default function AjouterNotes() {
-	const [notes, setNotes] = useState([]);
-	const [noteActive, setNoteActive] = useState(false);
-
-	useEffect(() => {
-		let notesBDD = localStorage.getItem("notes");
-		if (notesBDD === null) {
-			localStorage.setItem("notes", JSON.stringify([]));
-			notesBDD = [];
-		}
-		setNotes(JSON.parse(notesBDD));
-	}, []);
-
+function AjouterNotes() {
+	const [notes, setNotes] = useState(JSON.parse(localStorage.notes) || []);
+	const [activeNote, setActiveNote] = useState(false);
 	useEffect(() => {
 		localStorage.setItem("notes", JSON.stringify(notes));
 	}, [notes]);
-
-	const AjoutNotes = () => {
-		const nouvelleNote = {
+	const OnAddNote = () => {
+		const newNote = {
 			id: uuidv4(),
 			title: "Note sans titre",
 			body: "",
-			derniereModification: Date.now(),
+			lastModified: Date.now(),
 		};
-		setNotes([nouvelleNote, ...notes]);
+		setNotes([newNote, ...notes]);
 	};
-
-	const SupprimerNotes = (suppId) => {
-		setNotes(notes.filter((note) => note.id !== suppId));
+	const OnDeleteNote = (idToDelete) => {
+		setNotes(notes.filter((note) => note.id !== idToDelete));
 	};
-
-	const ModifierNotes = (modifNote) => {
-		const modification = notes.map((note) => {
-			if (note.id === noteActive) {
-				return modifNote;
+	const OnUpdateNote = (updatedNote) => {
+		const updateNotesArray = notes.map((note) => {
+			if (note.id === activeNote) {
+				return updatedNote;
 			}
 			return note;
 		});
-		setNotes(modification);
+		setNotes(updateNotesArray);
 	};
-
-	const getNoteActive = () => {
-		return notes.find((note) => note.id === noteActive);
+	// help fonction
+	const getActiveNote = () => {
+		return notes.find((note) => note.id === activeNote);
 	};
-
 	return (
-		<div>
-			<NavBar />
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-5">
-						<Sidebar
-							notes={notes}
-							AjoutNotes={AjoutNotes}
-							SupprimerNotes={SupprimerNotes}
-							noteActive={noteActive}
-							setNoteActive={setNoteActive}
-						/>
-					</div>
-					<div class="col-7">
-						<Main noteActive={getNoteActive()} ModifierNotes={ModifierNotes} />
-					</div>
-				</div>
-			</div>
+		<div className="AjouterNotes">
+			<Sidebar
+				notes={notes}
+				OnAddNote={OnAddNote}
+				OnDeleteNote={OnDeleteNote}
+				activeNote={activeNote}
+				setActiveNote={setActiveNote}
+			/>
+			<Main activeNote={getActiveNote()} OnUpdateNote={OnUpdateNote} />
 		</div>
 	);
 }
+
+export default AjouterNotes;

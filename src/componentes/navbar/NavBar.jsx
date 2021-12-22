@@ -46,9 +46,9 @@ export default function NavBar() {
 								</Nav.Link>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">
-									<b>Configuration</b>
-								</a>
+								<Nav.Link as={NavLink} to="/AjoutNote">
+									<b>Notes</b>
+								</Nav.Link>
 							</li>
 						</ul>
 						<form className="d-flex">

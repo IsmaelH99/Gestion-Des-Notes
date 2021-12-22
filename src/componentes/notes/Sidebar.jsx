@@ -1,49 +1,78 @@
-import "./Sidebar.css";
-export default function Sidebar({
-	notes,
-	AjoutNotes,
-	SupprimerNotes,
-	noteActive,
-	setNoteActive,
-}) {
-	return (
-		<div>
-			<div class="list-group list-group-flush border-bottom scrollarea mt-5">
-				<div class="d-flex w-100 align-items-center justify-content-between">
-					<h1>Notes</h1>
-					<button type="button" onClick={AjoutNotes} class="btn btn-primary">
-						Ajouter
-					</button>
-				</div>
-			</div>
+import _ from "lodash";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-			{notes.map((note) => (
-				<div
-					className={`divHover ${note.id === noteActive && "active"}`}
-					onClick={() => setNoteActive(note.id)}
-				>
-					<div class="d-flex w-100 align-items-center  justify-content-between active">
-						<strong class="mb-1">{note.title}</strong>
-						<button
-							type="button"
-							onClick={() => SupprimerNotes(note.id)}
-							class="btn btn-danger"
-						>
-							Supprimer
-						</button>
-					</div>
-					<div class="col-10 mb-1 small">
-						<p>{note.body && note.body.substr(0, 50) + "..."}</p>
-						<small>
-							Derniere Modification{" "}
-							{new Date(note.derniereModification).toLocaleDateString("en-GB", {
+function Sidebar({
+	notes,
+	OnAddNote,
+	OnDeleteNote,
+	activeNote,
+	setActiveNote,
+}) {
+	const navigator = useNavigate();
+	const [rech, setRech] = useState("");
+
+	useEffect(() => {
+		if (notes === false) navigator("/");
+	}, [notes, navigator]);
+
+	function rechercher(strRech, notes) {
+		let tmpRech = strRech.toLowerCase();
+		let res = notes.filter((note) => {
+			let lowerNote = note.toLowerCase();
+			if (lowerNote.indexOf(tmpRech) > -1) return note;
+		});
+		return res;
+	}
+
+	return (
+		<div className="app-sidebar">
+			<div className="app-sidebar-header">
+				<h1>Notes</h1>
+				<button onClick={() => navigator("/")}>Retour</button>
+				<button onClick={OnAddNote}>Ajouter</button>
+			</div>
+			{notes.length > 0 && (
+				<div className="input-group mb-3">
+					<input
+						type="search"
+						value={rech}
+						onChange={(e) => {
+							setRech(e.target.value);
+						}}
+						className="form-control"
+						placeholder="Rechercher ..."
+					/>
+				</div>
+			)}
+			<div className="app-sidebar-notes">
+				{_.sortBy(notes, "title").map((note) => (
+					<div
+						className={`app-sidebar-note ${note.id === activeNote && "active"}`}
+						onClick={() => setActiveNote(note.id)}
+					>
+						<div className="app-sidebar-title">
+							<strong>{note.title}</strong>
+							<button
+								onClick={() => OnDeleteNote(note.id)}
+								className=" justify-content-between align-items-end"
+							>
+								Supprimer
+							</button>
+						</div>
+						<p>{note.body && note.body.substr(0, 100) + "..."}</p>
+						<small className="note-meta">
+							Derniére modification{" "}
+							{new Date(note.lastModified).toLocaleDateString("en-GB", {
 								hour: "2-digit",
 								minute: "2-digit",
 							})}
 						</small>
 					</div>
-				</div>
-			))}
+				))}
+			</div>
 		</div>
 	);
 }
+
+export default Sidebar;
