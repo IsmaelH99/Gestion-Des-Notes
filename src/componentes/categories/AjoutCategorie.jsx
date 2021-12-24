@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import { useNavigate } from "react-router-dom";
 import ListCat from "./ListCat";
@@ -8,6 +8,19 @@ export default function AjoutCategorie() {
 	const [categories, setCategories] = useState([]);
 	const [inputCategorie, setInputcategorie] = useState("");
 	const navigator = useNavigate();
+
+	useEffect(() => {
+		let categoriesBDD = localStorage.getItem("categories");
+		if (categoriesBDD === null) {
+			localStorage.setItem("categories", JSON.stringify([]));
+			categoriesBDD = [];
+		}
+		setCategories(JSON.parse(categoriesBDD));
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("categories", JSON.stringify(categories));
+	}, [categories]);
 
 	function AddCategorie() {
 		let tmp = [...categories];
