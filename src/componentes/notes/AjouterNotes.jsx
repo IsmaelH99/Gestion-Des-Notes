@@ -6,15 +6,27 @@ import Main from "./Main";
 import Sidebar from "./Sidebar";
 
 function AjouterNotes() {
-	const [notes, setNotes] = useState(JSON.parse(localStorage.notes) || []);
+	const [notes, setNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState(false);
+
+	useEffect(() => {
+		let notesBDD = localStorage.getItem("notes");
+		if (notesBDD === null) {
+			localStorage.setItem("notes", JSON.stringify([]));
+			notesBDD = [];
+		}
+		setNotes(JSON.parse(notesBDD));
+	}, []);
+
 	useEffect(() => {
 		localStorage.setItem("notes", JSON.stringify(notes));
 	}, [notes]);
+
 	const OnAddNote = () => {
 		const newNote = {
 			id: uuidv4(),
 			title: "Note sans titre",
+			categorie: "",
 			body: "",
 			lastModified: Date.now(),
 		};
@@ -37,15 +49,18 @@ function AjouterNotes() {
 		return notes.find((note) => note.id === activeNote);
 	};
 	return (
-		<div className="AjouterNotes">
-			<Sidebar
-				notes={notes}
-				OnAddNote={OnAddNote}
-				OnDeleteNote={OnDeleteNote}
-				activeNote={activeNote}
-				setActiveNote={setActiveNote}
-			/>
-			<Main activeNote={getActiveNote()} OnUpdateNote={OnUpdateNote} />
+		<div>
+			<NavBar />
+			<div className="AjouterNotes">
+				<Sidebar
+					notes={notes}
+					OnAddNote={OnAddNote}
+					OnDeleteNote={OnDeleteNote}
+					activeNote={activeNote}
+					setActiveNote={setActiveNote}
+				/>
+				<Main activeNote={getActiveNote()} OnUpdateNote={OnUpdateNote} />
+			</div>
 		</div>
 	);
 }
