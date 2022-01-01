@@ -44,7 +44,7 @@ function Sidebar({
 					<h6>{note.categorie}</h6>
 				</div>
 
-				<p>{note.body && note.body.substr(0, 100) + "..."}</p>
+				<p>{note.body && note.body.substr(0, 50) + "..."}</p>
 				<small className="note-meta">
 					Derniére modification{" "}
 					{new Date(note.lastModified).toLocaleDateString("en-GB", {
@@ -77,10 +77,21 @@ function Sidebar({
 							className="form-control"
 							placeholder="Rechercher ..."
 						/>
+
+						{notes.length > 0 && (
+							<div className="mb-4 mt-3">
+								<b>Nombre de notes totales </b>
+								<span className="nb-pro badge rounded-pill bg-info text-dark">
+									<b>{notes.length}</b>
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 			)}
-			<div className="app-sidebar-notes">{lesNotes}</div>
+			<div class="scrollbar scrollbar-primary">
+				<div class="force-overflow">{lesNotes}</div>
+			</div>
 		</div>
 	);
 }

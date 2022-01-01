@@ -1,6 +1,12 @@
 import ReactMarkdown from "react-markdown";
+import { useState, useEffect } from "react";
 
 function Main({ activeNote, OnUpdateNote }) {
+	const [selectCategorie, setSelectCategorie] = useState("");
+	useEffect(() => {
+		let categoriesBDD = localStorage.getItem("categories");
+		console.log(categoriesBDD);
+	}, []);
 	const OnEditField = (key, value) => {
 		OnUpdateNote({
 			...activeNote,
@@ -30,13 +36,28 @@ function Main({ activeNote, OnUpdateNote }) {
 						<label class="form-label">
 							<b>Catégorie</b>
 						</label>
-						<input
-							type="text"
-							id="Catégorie"
-							value={activeNote && activeNote.categorie}
-							onChange={(e) => OnEditField("categorie", e.target.value)}
-							class="form-control"
-						/>
+						<div className="m-2">
+							<select
+								className="form-control me-4"
+								value={activeNote && activeNote.categorie}
+								onChange={(e) => OnEditField("categorie", e.target.value)}
+							>
+								{/* {categoriesBDD.map((categorieBDD) => {
+									return categorieBDD;
+								})} */}
+								<option>Toutes les catégories</option>
+
+								<option>Achats</option>
+
+								<option>Shopping</option>
+
+								<option>Rendez-vous</option>
+
+								<option>Frais</option>
+
+								<option>Charges</option>
+							</select>
+						</div>
 					</div>
 					<div>
 						<textarea

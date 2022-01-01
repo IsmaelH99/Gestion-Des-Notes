@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Carnets from "./componentes/carnets/Carnets";
 import AjoutCategorie from "./componentes/categories/AjoutCategorie";
 import AjouterNotes from "./componentes/Notes/AjouterNotes";
+import NotesCarnets from "./componentes/Notes/NotesCarnets";
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 					<Route path="/Carnets" element={<Carnets />}></Route>
 					<Route path="/AjoutCategorie" element={<AjoutCategorie />}></Route>
 					<Route path="/AjoutNote" element={<AjouterNotes />}></Route>
+					<Route path="/carnet/:id" element={<AjouterNotes />}></Route>
 				</Routes>
 			</Router>
 		</div>

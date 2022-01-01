@@ -7,7 +7,7 @@ import { Navbar, Nav } from "react-bootstrap";
 export default function NavBar() {
 	return (
 		<div>
-			<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+			<nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
 				<div className="container-fluid">
 					<Nav.Link as={NavLink} to="/">
 						<img

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import { useNavigate, Link } from "react-router-dom";
+import "./Carnets.css";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
@@ -23,7 +25,11 @@ export default function Carnets() {
 	function AddCarnets() {
 		let tmp = [...carnets];
 		if (inputCarnets.trim().length > 0) {
-			tmp.push(inputCarnets);
+			tmp.push({
+				id: uuidv4(),
+				titreCarnet: inputCarnets,
+				notesCarnet: [],
+			});
 			setCarnets(tmp);
 		}
 		setInputCarnets("");
@@ -40,11 +46,11 @@ export default function Carnets() {
 	let afficheCarnet = carnets.map((carnet, i) => {
 		return (
 			<div key={"carnets-" + i} className="mt-3 ms-3 ">
-				<div class="col-md-4">
+				<div class="col-md-12">
 					<div class="card h-100">
 						<div class="card-header text-center">
-							<Link to="/AjoutCategorie">
-								<b>{carnet}</b>
+							<Link to={`/carnet/${carnet.id}`}>
+								<b>{carnet.titreCarnet}</b>
 							</Link>
 						</div>
 						<div class="card-body text-white bg-secondary">
@@ -66,36 +72,48 @@ export default function Carnets() {
 	return (
 		<div>
 			<NavBar />
-			<main>
-				<section className="container">
-					<section className="row">
-						<section className="col-md-8">
-							<h1 className="mt-5">Ajout d'un carnet</h1>
-							<div className="input-group mb-3 mt-3">
-								<input
-									type="text"
-									class="form-control"
-									placeholder="Ajouter un carnet "
-									aria-label="Recipient's username"
-									aria-describedby="button-addon2"
-									value={inputCarnets}
-									onChange={(e) => setInputCarnets(e.target.value)}
-								/>
-								<div>
-									<button
-										type="button"
-										onClick={AddCarnets}
-										className="btn btn-primary ms-3"
-									>
-										Ajouter
-									</button>
-								</div>
-							</div>
+			<div class="carnet_scrollbar carnet_scrollbar-primary">
+				<div class="carnet_force-overflow">
+					<main>
+						<section className="container">
+							<section className="row">
+								<section className="col-md-8">
+									<h1 className="mt-5">Ajout d'un carnet</h1>
+									<div className="input-group mb-3 mt-3">
+										<input
+											type="text"
+											class="form-control"
+											placeholder="Ajouter un carnet "
+											aria-label="Recipient's username"
+											aria-describedby="button-addon2"
+											value={inputCarnets}
+											onChange={(e) => setInputCarnets(e.target.value)}
+										/>
+										<div>
+											<button
+												type="button"
+												onClick={AddCarnets}
+												className="btn btn-primary ms-3"
+											>
+												Ajouter
+											</button>
+										</div>
+									</div>
+									{carnets.length > 0 && (
+										<div className="mb-4 mt-3">
+											<b>Nombre de carnets totals </b>
+											<span className="nb-pro badge rounded-pill bg-info text-dark">
+												<b>{carnets.length}</b>
+											</span>
+										</div>
+									)}
+									<div className="carton">{afficheCarnet}</div>
+								</section>
+							</section>
 						</section>
-					</section>
-				</section>
-			</main>
-			{afficheCarnet}
+					</main>
+				</div>
+			</div>
 		</div>
 	);
 }
