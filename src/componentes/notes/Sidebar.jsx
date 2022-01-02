@@ -7,6 +7,8 @@ function Sidebar({
 	OnDeleteNote,
 	activeNote,
 	setActiveNote,
+	carnets,
+	carnet,
 }) {
 	const [rech, setRech] = useState("");
 
@@ -59,7 +61,7 @@ function Sidebar({
 	return (
 		<div className="app-sidebar">
 			<div className="app-sidebar-header">
-				<h1>Notes</h1>
+				<h1>Notes de {carnet && carnet.titreCarnet}</h1>
 
 				<button type="button" onClick={OnAddNote} class="btn btn-success">
 					Ajouter

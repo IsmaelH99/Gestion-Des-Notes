@@ -5,13 +5,14 @@ export default function NotesCarnets() {
 	const { id } = useParams();
 	console.log(id);
 	const [carnets, setCarnets] = useState([]);
+
 	const [carnet, setCarnet] = useState({});
 	const [notes, setNotes] = useState([]);
 	const [text, setText] = useState("");
 
 	useEffect(() => {
 		let datas = localStorage.getItem("carnets");
-		console.log("datas", datas);
+		//console.log("datas", datas);
 		setCarnets(JSON.parse(datas));
 		// let data = carnets.find((x) => x.id === id);
 		// setCarnet(data);
@@ -20,9 +21,9 @@ export default function NotesCarnets() {
 		let data = carnets.find((x) => x.id === id);
 		setCarnet(data);
 		// setNotes(data.notesCarnet);
-		console.log(data);
+		//console.log(data);
 	}, [carnets]);
-	console.log(carnet);
+	//console.log(carnet);
 
 	function AjoutNote() {
 		let tmp = { ...carnet };
@@ -37,7 +38,7 @@ export default function NotesCarnets() {
 		});
 		localStorage.setItem("carnets", JSON.stringify(carnets));
 
-		console.log(carnet);
+		//console.log(carnet);
 	}
 	return (
 		<div>

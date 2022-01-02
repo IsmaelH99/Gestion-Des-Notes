@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import NavBar from "../navbar/NavBar";
 import "./AjouterNotes.css";
@@ -6,6 +7,21 @@ import Main from "./Main";
 import Sidebar from "./Sidebar";
 
 function AjouterNotes() {
+	const { id } = useParams();
+	console.log(id);
+
+	const [carnet, setCarnet] = useState({});
+	const [carnets, setCarnets] = useState([]);
+
+	useEffect(() => {
+		let datas = localStorage.getItem("carnets");
+		setCarnets(JSON.parse(datas));
+	}, []);
+	useEffect(() => {
+		let data = carnets.find((x) => x.id === id);
+		setCarnet(data);
+	}, [carnets]);
+
 	const [notes, setNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState(false);
 
@@ -32,6 +48,7 @@ function AjouterNotes() {
 		};
 		setNotes([newNote, ...notes]);
 	};
+
 	const OnDeleteNote = (idToDelete) => {
 		setNotes(notes.filter((note) => note.id !== idToDelete));
 	};
@@ -58,6 +75,8 @@ function AjouterNotes() {
 					OnDeleteNote={OnDeleteNote}
 					activeNote={activeNote}
 					setActiveNote={setActiveNote}
+					carnets={carnets}
+					carnet={carnet}
 				/>
 				<Main activeNote={getActiveNote()} OnUpdateNote={OnUpdateNote} />
 			</div>

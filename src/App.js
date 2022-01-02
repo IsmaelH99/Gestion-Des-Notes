@@ -8,6 +8,7 @@ import Carnets from "./componentes/carnets/Carnets";
 import AjoutCategorie from "./componentes/categories/AjoutCategorie";
 import AjouterNotes from "./componentes/Notes/AjouterNotes";
 import NotesCarnets from "./componentes/Notes/NotesCarnets";
+import NotesDuCarnet from "./componentes/Notes/NoteFinal";
 
 function App() {
 	return (
