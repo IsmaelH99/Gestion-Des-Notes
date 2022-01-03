@@ -68,6 +68,31 @@ export default function Carnets() {
 			</div>
 		);
 	});
+	let afficheCarnetListe = carnets.map((carnet, i) => {
+		return (
+			<main>
+				<section className="container">
+					<section className="row">
+						<section className="col-md-10">
+							<li className="list-group-item  d-flex justify-content-between align-items-center mt-3">
+								<Link to={`/carnet/${carnet.id}`}>
+									<b>{carnet.titreCarnet}</b>
+								</Link>
+								<span>
+									<button
+										className="btn btn-danger mt-2"
+										onClick={() => supprimer(carnet)}
+									>
+										Supprimer
+									</button>
+								</span>
+							</li>
+						</section>
+					</section>
+				</section>
+			</main>
+		);
+	});
 
 	return (
 		<div>
@@ -107,7 +132,9 @@ export default function Carnets() {
 											</span>
 										</div>
 									)}
+
 									<div className="carton">{afficheCarnet}</div>
+									<div>{afficheCarnetListe}</div>
 								</section>
 							</section>
 						</section>
