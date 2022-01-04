@@ -3,10 +3,12 @@ import NavBar from "../navbar/NavBar";
 import { useNavigate, Link } from "react-router-dom";
 import "./Carnets.css";
 import { v4 as uuidv4 } from "uuid";
-
+import React from "react";
+import Carn from "./SwitchMode";
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
 	const [inputCarnets, setInputCarnets] = useState("");
+	const [active, setActive] = useState("CardsCarn");
 	const navigator = useNavigate();
 
 	useEffect(() => {
@@ -43,11 +45,11 @@ export default function Carnets() {
 		setCarnets(tmp);
 	}
 
-	let afficheCarnet = carnets.map((carnet, i) => {
+	let afficheCarnetCards = carnets.map((carnet, i) => {
 		return (
-			<div key={"carnets-" + i} className="mt-3 ms-3 ">
-				<div class="col-md-12">
-					<div class="card h-100">
+			<div key={"carnetsCards-" + i} className="mt-3 ms-3 ">
+				<div class="col-md-12 ">
+					<div class="card h-100 ">
 						<div class="card-header text-center">
 							<Link to={`/carnet/${carnet.id}`}>
 								<b>{carnet.titreCarnet}</b>
@@ -70,7 +72,7 @@ export default function Carnets() {
 	});
 	let afficheCarnetListe = carnets.map((carnet, i) => {
 		return (
-			<main>
+			<main key={"carnetsList-" + i}>
 				<section className="container">
 					<section className="row">
 						<section className="col-md-10">
@@ -93,7 +95,7 @@ export default function Carnets() {
 			</main>
 		);
 	});
-
+	const afficheCards = <div className="carton"> {afficheCarnetCards}</div>;
 	return (
 		<div>
 			<NavBar />
@@ -132,9 +134,28 @@ export default function Carnets() {
 											</span>
 										</div>
 									)}
-
-									<div className="carton">{afficheCarnet}</div>
-									<div>{afficheCarnetListe}</div>
+									{carnets.length > 0 && (
+										<nav>
+											<button
+												className="btn btn-info"
+												onClick={() => setActive("CardsCarn")}
+											>
+												Cards
+											</button>
+											<button
+												className="btn btn-primary ms-3"
+												onClick={() => setActive("ListesCarn")}
+											>
+												Listes
+											</button>
+										</nav>
+									)}
+									<div>
+										{active === "CardsCarn" && <Carn title={afficheCards} />}
+										{active === "ListesCarn" && (
+											<Carn title={afficheCarnetListe} />
+										)}
+									</div>
 								</section>
 							</section>
 						</section>

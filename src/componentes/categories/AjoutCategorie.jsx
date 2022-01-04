@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
 import { useNavigate } from "react-router-dom";
 import ListCat from "./ListCat";
+import { v4 as uuidv4 } from "uuid";
+
 // import Carnets from "../carnets/Carnets";
 
 export default function AjoutCategorie() {
@@ -25,7 +27,10 @@ export default function AjoutCategorie() {
 	function AddCategorie() {
 		let tmp = [...categories];
 		if (inputCategorie.trim().length > 0) {
-			tmp.push(inputCategorie);
+			tmp.push({
+				id: uuidv4(),
+				titreCategorie: inputCategorie,
+			});
 			setCategories(tmp);
 		}
 		setInputcategorie("");
@@ -33,21 +38,24 @@ export default function AjoutCategorie() {
 	}
 	let afficheCategorie = categories.map((categorie, i) => {
 		return (
-			<ListCat key={"categories-" + i} categorie={categorie} ajnot={ajnot} />
+			<ListCat
+				key={"categories-" + i}
+				categorie={categorie} /*ajnot={ajnot}*/
+			/>
 		);
 	});
 
-	function ajnot(categorie) {
-		const id = categorie;
-		const indice = categories.findIndex((categorie) => categorie === id);
-		let tmp = [...categories];
+	// function ajnot(categorie) {
+	// 	const id = categorie;
+	// 	const indice = categories.findIndex((categorie) => categorie === id);
+	// 	let tmp = [...categories];
 
-		// const id = categorie.id;
-		// const i = users.findIndex((user) => user.id === id);
-		// const indice = categories.indexOf(categorie);
-		console.log(indice);
-		//alert("toto");
-	}
+	// 	// const id = categorie.id;
+	// 	// const i = users.findIndex((user) => user.id === id);
+	// 	// const indice = categories.indexOf(categorie);
+	// 	console.log(indice);
+	// 	//alert("toto");
+	// }
 
 	return (
 		<div>

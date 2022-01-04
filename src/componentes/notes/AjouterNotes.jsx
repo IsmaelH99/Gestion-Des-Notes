@@ -22,6 +22,18 @@ function AjouterNotes() {
 		setCarnet(data);
 	}, [carnets]);
 
+	const [categorie, setCategorie] = useState({});
+	const [categories, setCategories] = useState([]);
+
+	useEffect(() => {
+		let datas = localStorage.getItem("categories");
+		setCategories(JSON.parse(datas));
+	}, []);
+	useEffect(() => {
+		let data = categories.find((x) => x.id === id);
+		setCategorie(data);
+	}, [categories]);
+
 	const [notes, setNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState(false);
 
@@ -40,6 +52,7 @@ function AjouterNotes() {
 
 	const OnAddNote = () => {
 		const newNote = {
+			idCarnet: { id },
 			id: uuidv4(),
 			title: "Note sans titre",
 			categorie: "",

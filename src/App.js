@@ -9,7 +9,7 @@ import AjoutCategorie from "./componentes/categories/AjoutCategorie";
 import AjouterNotes from "./componentes/Notes/AjouterNotes";
 import NotesCarnets from "./componentes/Notes/NotesCarnets";
 import NotesDuCarnet from "./componentes/Notes/NoteFinal";
-
+import React from "react";
 function App() {
 	return (
 		<div className="App">
@@ -34,5 +34,4 @@ function App() {
 		</div>
 	);
 }
-
 export default App;

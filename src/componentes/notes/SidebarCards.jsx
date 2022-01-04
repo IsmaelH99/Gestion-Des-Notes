@@ -69,10 +69,6 @@ function Sidebar({
 		}
 	);
 
-	function switchToList() {
-		navigator("/carnet/:id");
-	}
-
 	return (
 		<div className="app-sidebar">
 			<div className="app-sidebar-header">
@@ -101,13 +97,6 @@ function Sidebar({
 								<span className="nb-pro badge rounded-pill bg-info text-dark">
 									<b>{notes.length}</b>
 								</span>
-								<button
-									type="button"
-									onClick={() => switchToList()}
-									class="btn btn-success"
-								>
-									Switch
-								</button>
 							</div>
 						)}
 					</div>

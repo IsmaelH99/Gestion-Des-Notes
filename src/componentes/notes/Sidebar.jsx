@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Sidebar.css";
 
 function Sidebar({
@@ -125,10 +125,6 @@ function Sidebar({
 								<span className="nb-pro badge rounded-pill bg-info text-dark">
 									<b>{notes.length}</b>
 								</span>
-
-								<button type="button" class="btn btn-success">
-									Switch
-								</button>
 							</div>
 						)}
 					</div>
