@@ -10,6 +10,7 @@ import AjouterNotes from "./componentes/Notes/AjouterNotes";
 import NotesCarnets from "./componentes/Notes/NotesCarnets";
 import NotesDuCarnet from "./componentes/Notes/NoteFinal";
 import React from "react";
+import ModifCarnet from "./componentes/carnets/ModifCarnet";
 function App() {
 	return (
 		<div className="App">
@@ -29,6 +30,7 @@ function App() {
 					<Route path="/AjoutCategorie" element={<AjoutCategorie />}></Route>
 					<Route path="/AjoutNote" element={<AjouterNotes />}></Route>
 					<Route path="/carnet/:id" element={<AjouterNotes />}></Route>
+					<Route path="/carnet/Modif/:id" element={<ModifCarnet />}></Route>
 				</Routes>
 			</Router>
 		</div>

@@ -1,16 +1,21 @@
-export default function ListCat({ categorie, ajnot }) {
+export default function ListCat({ categorie, supprimer }) {
 	return (
-		<div className="mt-3">
+		<div>
 			<main>
 				<section className="container">
 					<section className="row">
 						<section className="col-md-8">
-							<li class="list-group-item d-flex justify-content-between align-items-center">
-								<div class="ms-2 me-auto">
-									<div class="fw-bold">
-										<b>{categorie}</b>
-									</div>
-								</div>
+							<li className="list-group-item  d-flex justify-content-between align-items-center mt-3">
+								<b>{categorie}</b>
+
+								<span>
+									<button
+										className="btn btn-danger mt-2"
+										onClick={() => supprimer(categorie)}
+									>
+										Supprimer
+									</button>
+								</span>
 							</li>
 						</section>
 					</section>

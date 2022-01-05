@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
-import { useNavigate } from "react-router-dom";
 import ListCat from "./ListCat";
-import { v4 as uuidv4 } from "uuid";
-
-// import Carnets from "../carnets/Carnets";
 
 export default function AjoutCategorie() {
 	const [categories, setCategories] = useState([]);
 	const [inputCategorie, setInputcategorie] = useState("");
-	const navigator = useNavigate();
 
 	useEffect(() => {
 		let categoriesBDD = localStorage.getItem("categories");
@@ -27,35 +22,27 @@ export default function AjoutCategorie() {
 	function AddCategorie() {
 		let tmp = [...categories];
 		if (inputCategorie.trim().length > 0) {
-			tmp.push({
-				id: uuidv4(),
-				titreCategorie: inputCategorie,
-			});
+			tmp.push(inputCategorie);
 			setCategories(tmp);
 		}
 		setInputcategorie("");
-		//navigator("/Carnets");
+	}
+	function supprimer(categorie) {
+		let tmp = [...categories];
+		const indice = categories.indexOf(categorie);
+		console.log(indice);
+		if (indice > -1) tmp.splice(indice, 1);
+		setCategories(tmp);
 	}
 	let afficheCategorie = categories.map((categorie, i) => {
 		return (
 			<ListCat
 				key={"categories-" + i}
-				categorie={categorie} /*ajnot={ajnot}*/
+				categorie={categorie}
+				supprimer={supprimer}
 			/>
 		);
 	});
-
-	// function ajnot(categorie) {
-	// 	const id = categorie;
-	// 	const indice = categories.findIndex((categorie) => categorie === id);
-	// 	let tmp = [...categories];
-
-	// 	// const id = categorie.id;
-	// 	// const i = users.findIndex((user) => user.id === id);
-	// 	// const indice = categories.indexOf(categorie);
-	// 	console.log(indice);
-	// 	//alert("toto");
-	// }
 
 	return (
 		<div>

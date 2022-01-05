@@ -1,8 +1,7 @@
 import ReactMarkdown from "react-markdown";
-import { useState, useEffect } from "react";
-
-function Main({ activeNote, OnUpdateNote }) {
-	const [selectCategorie, setSelectCategorie] = useState("");
+import { useEffect } from "react";
+import Select from "./Select";
+function Main({ activeNote, OnUpdateNote, categories }) {
 	useEffect(() => {
 		let categoriesBDD = localStorage.getItem("categories");
 		console.log(categoriesBDD);
@@ -16,6 +15,15 @@ function Main({ activeNote, OnUpdateNote }) {
 	};
 	if (!activeNote)
 		return <div className="no-active-note">Aucune note selectionnée</div>;
+
+	const select = (
+		<Select>
+			{categories.map((categorie, i) => {
+				return <option>{categorie}</option>;
+			})}
+		</Select>
+	);
+
 	return (
 		<div className="app-main">
 			<div className="app-main-note-edit">
@@ -36,28 +44,7 @@ function Main({ activeNote, OnUpdateNote }) {
 						<label class="form-label">
 							<b>Catégorie</b>
 						</label>
-						<div className="m-2">
-							<select
-								className="form-control me-4"
-								value={activeNote && activeNote.categorie}
-								onChange={(e) => OnEditField("categorie", e.target.value)}
-							>
-								{/* {categoriesBDD.map((categorieBDD) => {
-									return categorieBDD;
-								})} */}
-								<option>Toutes les catégories</option>
-
-								<option>Achats</option>
-
-								<option>Shopping</option>
-
-								<option>Rendez-vous</option>
-
-								<option>Frais</option>
-
-								<option>Charges</option>
-							</select>
-						</div>
+						{select}
 					</div>
 					<div>
 						<textarea

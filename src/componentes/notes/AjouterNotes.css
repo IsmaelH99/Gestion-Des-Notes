@@ -52,10 +52,6 @@ button:hover {
 	margin: 0;
 }
 
-/* .app-sidebar-notes {
-	height: calc(100vh - 78px);
-	overflow-y: scroll;
-} */
 .scrollbar {
 	background: #fff;
 	overflow-y: scroll;

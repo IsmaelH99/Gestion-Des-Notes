@@ -34,6 +34,7 @@ function AjouterNotes() {
 		setCategorie(data);
 	}, [categories]);
 
+	console.log(categories);
 	const [notes, setNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState(false);
 
@@ -91,7 +92,12 @@ function AjouterNotes() {
 					carnets={carnets}
 					carnet={carnet}
 				/>
-				<Main activeNote={getActiveNote()} OnUpdateNote={OnUpdateNote} />
+				<Main
+					activeNote={getActiveNote()}
+					OnUpdateNote={OnUpdateNote}
+					categorie={categorie}
+					categories={categories}
+				/>
 			</div>
 		</div>
 	);

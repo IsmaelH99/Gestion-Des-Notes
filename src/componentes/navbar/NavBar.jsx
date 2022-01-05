@@ -1,8 +1,6 @@
 import "./NavBar.css";
-import { Route, Router, Routes, Link } from "react-router-dom";
-import Carnets from "../carnets/Carnets";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 
 export default function NavBar() {
 	return (
@@ -43,11 +41,6 @@ export default function NavBar() {
 							<li className="nav-item">
 								<Nav.Link as={NavLink} to="/AjoutCategorie">
 									<b>Catégories</b>
-								</Nav.Link>
-							</li>
-							<li className="nav-item">
-								<Nav.Link as={NavLink} to="/AjoutNote">
-									<b>Notes</b>
 								</Nav.Link>
 							</li>
 						</ul>

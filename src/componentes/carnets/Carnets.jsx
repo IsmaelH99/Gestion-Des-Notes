@@ -1,16 +1,32 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Carnets.css";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import Carn from "./SwitchMode";
+
 export default function Carnets() {
 	const [carnets, setCarnets] = useState([]);
+
 	const [inputCarnets, setInputCarnets] = useState("");
 	const [active, setActive] = useState("CardsCarn");
-	const navigator = useNavigate();
 
+	const [rech, setRech] = useState("");
+
+	function rechercher(strRech, liste) {
+		let tmpRech = strRech.toLowerCase();
+		let res = liste.filter((car) => {
+			let lowerCarnetTitre = car.titreCarnet.toLowerCase();
+
+			if (lowerCarnetTitre.indexOf(tmpRech) > -1) return car;
+		});
+		return res;
+	}
+	// const [titreCarnet, setTitreCarnet] = useState("");
+	// useEffect(() => {
+	// 	setTitreCarnet(localStorage.getItem("carnets"));
+	// }, []);
 	useEffect(() => {
 		let carnetsBDD = localStorage.getItem("carnets");
 		if (carnetsBDD === null) {
@@ -33,9 +49,9 @@ export default function Carnets() {
 				notesCarnet: [],
 			});
 			setCarnets(tmp);
+			console.log(tmp);
 		}
 		setInputCarnets("");
-		// navigator("/");
 	}
 	function supprimer(carnet) {
 		let tmp = [...carnets];
@@ -45,7 +61,12 @@ export default function Carnets() {
 		setCarnets(tmp);
 	}
 
-	let afficheCarnetCards = carnets.map((carnet, i) => {
+	function Enregistrer(carnet) {
+		let tmpEnr = [...carnets];
+		setCarnets(tmpEnr);
+	}
+	function Modifier() {}
+	let afficheCarnetCards = rechercher(rech, carnets).map((carnet, i) => {
 		return (
 			<div key={"carnetsCards-" + i} className="mt-3 ms-3 ">
 				<div class="col-md-12 ">
@@ -56,13 +77,22 @@ export default function Carnets() {
 							</Link>
 						</div>
 						<div class="card-body text-white bg-secondary">
-							<h5 class="card-title">Card title</h5>
+							<h5 class="card-title">trgfk</h5>
 							<p class="card-text">This is a short card.</p>
 						</div>
 					</div>
 				</div>
+
+				<Link to={`/carnet/Modif/${carnet.id}`}>
+					<button
+						className="btn btn-warning mt-2"
+						onClick={() => Modifier(carnet)}
+					>
+						Modifier
+					</button>
+				</Link>
 				<button
-					className="btn btn-danger mt-2"
+					className="btn btn-danger mt-2 ms-3"
 					onClick={() => supprimer(carnet)}
 				>
 					Supprimer
@@ -81,8 +111,16 @@ export default function Carnets() {
 									<b>{carnet.titreCarnet}</b>
 								</Link>
 								<span>
+									<Link to="/carnet/ModifierCarnet">
+										<button
+											className="btn btn-warning mt-2"
+											onClick={() => Modifier(carnet)}
+										>
+											Modifier
+										</button>
+									</Link>
 									<button
-										className="btn btn-danger mt-2"
+										className="btn btn-danger mt-2 ms-3"
 										onClick={() => supprimer(carnet)}
 									>
 										Supprimer
@@ -96,9 +134,10 @@ export default function Carnets() {
 		);
 	});
 	const afficheCards = <div className="carton"> {afficheCarnetCards}</div>;
+
 	return (
 		<div>
-			<NavBar />
+			<NavBar /*titreCarnet={titreCarnet} carnets={carnets} */ />
 			<div class="carnet_scrollbar carnet_scrollbar-primary">
 				<div class="carnet_force-overflow">
 					<main>
@@ -126,6 +165,20 @@ export default function Carnets() {
 											</button>
 										</div>
 									</div>
+									{carnets.length > 0 && (
+										<div className="col-md-6">
+											<input
+												type="search"
+												value={rech}
+												onChange={(e) => {
+													setRech(e.target.value);
+												}}
+												className="form-control"
+												placeholder="Rechercher ..."
+											/>
+										</div>
+									)}
+
 									{carnets.length > 0 && (
 										<div className="mb-4 mt-3">
 											<b>Nombre de carnets totals </b>
