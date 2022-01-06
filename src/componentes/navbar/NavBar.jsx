@@ -39,6 +39,7 @@ export default function NavBar() {
 									<b>Catégories</b>
 								</Nav.Link>
 							</li>
+
 							<li className="nav-item active">
 								<Nav.Link as={NavLink} to="/Carnets">
 									<b>Carnets</b>

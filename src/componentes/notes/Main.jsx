@@ -1,11 +1,13 @@
 import ReactMarkdown from "react-markdown";
 import { useEffect } from "react";
 import Select from "./Select";
+
 function Main({ activeNote, OnUpdateNote, categories }) {
 	useEffect(() => {
 		let categoriesBDD = localStorage.getItem("categories");
 		console.log(categoriesBDD);
 	}, []);
+
 	const OnEditField = (key, value) => {
 		OnUpdateNote({
 			...activeNote,
@@ -13,13 +15,14 @@ function Main({ activeNote, OnUpdateNote, categories }) {
 			lastModified: Date.now(),
 		});
 	};
+
 	if (!activeNote)
 		return <div className="no-active-note">Aucune note selectionnée</div>;
 
 	const select = (
 		<Select>
 			{categories.map((categorie, i) => {
-				return <option>{categorie}</option>;
+				return <option>{JSON.stringify(categorie.titreCat)}</option>;
 			})}
 		</Select>
 	);
@@ -32,6 +35,7 @@ function Main({ activeNote, OnUpdateNote, categories }) {
 						<label class="form-label">
 							<b>Titre</b>
 						</label>
+
 						<input
 							type="text"
 							id="title"
@@ -44,6 +48,7 @@ function Main({ activeNote, OnUpdateNote, categories }) {
 						<label class="form-label">
 							<b>Catégorie</b>
 						</label>
+
 						{select}
 					</div>
 					<div>

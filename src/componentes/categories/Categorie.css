@@ -1,0 +1,20 @@
+.categorie_scrollbar {
+	height: 540px;
+	background: #fff;
+	overflow-y: scroll;
+}
+.categorie_force-overflow {
+	min-height: 450px;
+}
+.categorie_scrollbar-primary::-webkit-scrollbar {
+	width: 12px;
+	background-color: #f5f5f5;
+}
+
+.categorie_scrollbar-primary::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #4285f4;
+}
+.categorie_scrollbar-primary {
+	scrollbar-color: #4285f4 #f5f5f5;
+}

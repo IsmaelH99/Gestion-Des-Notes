@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 }
 
-/* GLOBAL STYLES */
+/* Style Général */
 
 body,
 .AjouterNotes {
@@ -35,7 +35,7 @@ button:hover {
 	display: flex;
 }
 
-/* SIDEBAR STYLES */
+/* Style Sidebar */
 
 .app-sidebar {
 	width: 30%;
@@ -51,6 +51,8 @@ button:hover {
 .app-sidebar-header h1 {
 	margin: 0;
 }
+
+/* Scrollbar Sidebar*/
 
 .scrollbar {
 	background: #fff;
@@ -105,7 +107,7 @@ button:hover {
 	color: white;
 }
 
-/* NOTE EDITOR/PREVIEW (MAIN) STYLES */
+/* Style Main */
 
 .app-main {
 	width: 70%;
@@ -125,7 +127,7 @@ button:hover {
 	color: #999;
 }
 
-/* Editing */
+/* Modif */
 .app-main-note-edit {
 	padding: 25px;
 }
@@ -147,7 +149,7 @@ textarea {
 	font-size: 2rem;
 }
 
-/* Preview */
+/* Aperçu */
 .app-main-note-preview {
 	border-top: 1px solid #ddd;
 	overflow-y: scroll;

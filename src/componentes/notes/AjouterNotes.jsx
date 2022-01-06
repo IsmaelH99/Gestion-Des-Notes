@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import NavBar from "../navbar/NavBar";
 import "./AjouterNotes.css";
 import Main from "./Main";
@@ -8,7 +7,6 @@ import Sidebar from "./Sidebar";
 
 function AjouterNotes() {
 	const { id } = useParams();
-	console.log(id);
 
 	const [carnet, setCarnet] = useState({});
 	const [carnets, setCarnets] = useState([]);
@@ -34,7 +32,6 @@ function AjouterNotes() {
 		setCategorie(data);
 	}, [categories]);
 
-	console.log(categories);
 	const [notes, setNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState(false);
 
@@ -75,10 +72,11 @@ function AjouterNotes() {
 		});
 		setNotes(updateNotesArray);
 	};
-	// help fonction
+
 	const getActiveNote = () => {
 		return notes.find((note) => note.id === activeNote);
 	};
+
 	return (
 		<div>
 			<NavBar />
@@ -89,8 +87,6 @@ function AjouterNotes() {
 					OnDeleteNote={OnDeleteNote}
 					activeNote={activeNote}
 					setActiveNote={setActiveNote}
-					carnets={carnets}
-					carnet={carnet}
 				/>
 				<Main
 					activeNote={getActiveNote()}

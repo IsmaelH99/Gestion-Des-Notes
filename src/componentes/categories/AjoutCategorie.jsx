@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../navbar/NavBar";
+import "./Categorie.css";
 
 export default function AjoutCategorie() {
 	const [categories, setCategories] = useState(() => {
@@ -11,48 +12,26 @@ export default function AjoutCategorie() {
 		}
 	});
 	const [categorie, setCategorie] = useState("");
-	const [isEditing, setIsEditing] = useState(false);
-	const [currentCategorie, setCurrentCategorie] = useState({});
-	const [inputCategorie, setInputcategorie] = useState("");
-
-	// useEffect(() => {
-	// 	let categoriesBDD = localStorage.getItem("categories");
-	// 	if (categoriesBDD === null) {
-	// 		localStorage.setItem("categories", JSON.stringify([]));
-	// 		categoriesBDD = [];
-	// 	}
-	// 	setCategories(JSON.parse(categoriesBDD));
-	// }, []);
+	const [ModeModifCategorie, setModeModifCategorie] = useState(false);
+	const [ActuCategorie, setActuCategorie] = useState({});
 
 	useEffect(() => {
 		localStorage.setItem("categories", JSON.stringify(categories));
 	}, [categories]);
 
-	const [rech, setRech] = useState("");
-
-	function rechercher(strRech, liste) {
-		let tmpRech = strRech.toLowerCase();
-		let res = liste.filter((car) => {
-			let lowerCategorieTitre = car.titreCat.toLowerCase();
-
-			if (lowerCategorieTitre.indexOf(tmpRech) > -1) return car;
-		});
-		return res;
-	}
-
-	function handleInputChange(e) {
+	function changementInput(e) {
 		setCategorie(e.target.value);
 	}
 
-	function handleEditInputChange(e) {
-		setCurrentCategorie({
-			...currentCategorie,
+	function modifierInput(e) {
+		setActuCategorie({
+			...ActuCategorie,
 			titreCat: e.target.value,
 		});
-		console.log(currentCategorie);
+		console.log(ActuCategorie);
 	}
 
-	function handleFormSubmit(e) {
+	function formulaireAjouter(e) {
 		e.preventDefault();
 
 		if (categorie !== "") {
@@ -68,67 +47,52 @@ export default function AjoutCategorie() {
 		setCategorie("");
 	}
 
-	function handleEditFormSubmit(e) {
+	function formulaireModifier(e) {
 		e.preventDefault();
 
-		handleUpdateCategorie(currentCategorie.id, currentCategorie);
+		updateCategorie(ActuCategorie.id, ActuCategorie);
 	}
 
-	function handleDeleteClick(id) {
-		const removeItem = categories.filter((catogorie) => {
+	function supprimer(id) {
+		const suppItem = categories.filter((catogorie) => {
 			return catogorie.id !== id;
 		});
-		setCategories(removeItem);
+		setCategories(suppItem);
 	}
 
-	function handleUpdateCategorie(id, updatedCategorie) {
-		const updatedItem = categories.map((categorie) => {
-			return categorie.id === id ? updatedCategorie : categorie;
+	function updateCategorie(id, updatedCategorie1) {
+		const updatedItem1 = categories.map((categorie) => {
+			return categorie.id === id ? updatedCategorie1 : categorie;
 		});
-		setIsEditing(false);
-		setCategories(updatedItem);
+		setModeModifCategorie(false);
+		setCategories(updatedItem1);
 	}
 
-	function handleEditClick(categorie) {
-		setIsEditing(true);
-		setCurrentCategorie({ ...categorie });
+	function modifier(categorie) {
+		setModeModifCategorie(true);
+		setActuCategorie({ ...categorie });
 	}
 
-	// function AddCategorie() {
-	// 	let tmp = [...categories];
-	// 	if (inputCategorie.trim().length > 0) {
-	// 		tmp.push(inputCategorie);
-	// 		setCategories(tmp);
-	// 	}
-	// 	setInputcategorie("");
-	// }
-	// function supprimer(categorie) {
-	// 	let tmp = [...categories];
-	// 	const indice = categories.indexOf(categorie);
-	// 	console.log(indice);
-	// 	if (indice > -1) tmp.splice(indice, 1);
-	// 	setCategories(tmp);
-	// }
-	let afficheCategorie = rechercher(rech, categories).map((categorie, i) => {
+	let afficheCategorie = categories.map((categorie) => {
 		return (
-			<div>
+			<div key={categorie.id}>
 				<main>
 					<section className="container">
 						<section className="row">
 							<section className="col-md-8">
 								<li className="list-group-item  d-flex justify-content-between align-items-center mt-3">
-									<b>{categorie.titreCat}</b>
+									<b>{categorie && categorie.titreCat}</b>
 
 									<span>
 										<button
 											className="btn btn-warning "
-											onClick={() => handleEditClick(categorie)}
+											onClick={() => modifier(categorie)}
 										>
 											Modifier
 										</button>
 										<button
 											className="btn btn-danger ms-3"
-											onClick={() => handleDeleteClick(categorie.id)}
+											onClick={() => supprimer(categorie.id)}
 										>
 											Supprimer
 										</button>
@@ -145,123 +109,90 @@ export default function AjoutCategorie() {
 	return (
 		<div>
 			<NavBar />
-			{isEditing ? (
-				<form onSubmit={handleEditFormSubmit}>
-					<main>
-						<section className="container">
-							<section className="row">
-								<section className="col-md-8">
-									<h1 className="mt-Carnet">Modifier une categorie</h1>
-									<div className="input-group mb-3 mt-3">
-										<input
-											name="modifier"
-											className="form-control"
-											type="text"
-											placeholder="Modifier"
-											value={currentCategorie.titreCat}
-											onChange={handleEditInputChange}
-										/>
-									</div>
-									<div>
-										<button
-											className="btn btn-secondary "
-											onClick={() => setIsEditing(false)}
-										>
-											Annuler
-										</button>
-										<button className="btn btn-success ms-3" type="submit">
-											Enregistrer
-										</button>
-									</div>
-								</section>
-							</section>
-						</section>
-					</main>
-				</form>
-			) : (
-				<form onSubmit={handleFormSubmit}>
-					<main>
-						<section className="container">
-							<section className="row">
-								<section className="col-md-8">
-									<h1 className="mt-Carnet">Ajout une categorie</h1>
-									<div className="input-group mb-3 mt-3">
-										<input
-											className="form-control"
-											name="categorie"
-											type="text"
-											placeholder="Ajouter une categorie"
-											value={categorie}
-											onChange={handleInputChange}
-										/>
-										<div>
-											<button type="submit" className="btn btn-primary ms-3">
-												Ajouter
-											</button>
-										</div>
-									</div>
-									<div className="mt-3">
-										{categories.length > 0 && (
-											<div className="col-md-5 mb-3">
+			<div class="categorie_scrollbar categorie_scrollbar-primary">
+				<div class="categorie_force-overflow">
+					{ModeModifCategorie ? (
+						<form onSubmit={formulaireModifier}>
+							<main>
+								<section className="container">
+									<section className="row">
+										<section className="col-md-8">
+											<h1 className="mt-Carnet">Modifier une categorie</h1>
+
+											<div className="input-group mb-3 mt-3">
 												<input
-													type="search"
-													value={rech}
-													onChange={(e) => {
-														setRech(e.target.value);
-													}}
+													name="modifier"
 													className="form-control"
-													placeholder="Rechercher ..."
+													type="text"
+													placeholder="Modifier"
+													value={ActuCategorie.titreCat}
+													onChange={modifierInput}
 												/>
 											</div>
-										)}
-										{categories.length > 0 && (
-											<div className="mb-4 mt-3">
-												<b>Nombre de categories totales </b>
-												<span className="nb-pro badge rounded-pill bg-info text-dark">
-													<b>{categories.length}</b>
-												</span>
+
+											<div>
+												<button
+													className="btn btn-secondary "
+													onClick={() => setModeModifCategorie(false)}
+												>
+													Annuler
+												</button>
+
+												<button className="btn btn-success ms-3" type="submit">
+													Enregistrer
+												</button>
 											</div>
-										)}
-										{afficheCategorie}
-									</div>
+										</section>
+									</section>
 								</section>
-							</section>
-						</section>
-					</main>
-				</form>
-			)}
+							</main>
+						</form>
+					) : (
+						<form onSubmit={formulaireAjouter}>
+							<main>
+								<section className="container">
+									<section className="row">
+										<section className="col-md-8">
+											<h1 className="mt-Carnet">Ajout une categorie</h1>
+
+											<div className="input-group mb-3 mt-3">
+												<input
+													className="form-control"
+													name="categorie"
+													type="text"
+													placeholder="Ajouter une categorie"
+													value={categorie}
+													onChange={changementInput}
+												/>
+
+												<div>
+													<button
+														type="submit"
+														className="btn btn-primary ms-3"
+													>
+														Ajouter
+													</button>
+												</div>
+											</div>
+											<div className="mt-3">
+												{categories.length > 0 && (
+													<div className="mb-4 mt-3">
+														<b>Nombre de categories totales </b>
+														<span className="nb-pro badge rounded-pill bg-info text-dark">
+															<b>{categories.length}</b>
+														</span>
+													</div>
+												)}
+												{afficheCategorie}
+											</div>
+										</section>
+									</section>
+								</section>
+							</main>
+						</form>
+					)}
+				</div>
+			</div>
 		</div>
 	);
-}
-{
-	/* <main>
-				<section className="container">
-					<section className="row">
-						<section className="col-md-8">
-							<h1 className="mt-5">Ajout d'une catégorie</h1>
-							<div class="input-group mb-3 mt-3">
-								<input
-									type="text"
-									class="form-control"
-									placeholder="Ajouter une catégorie"
-									aria-label="Recipient's username"
-									aria-describedby="button-addon2"
-									value={inputCategorie}
-									onChange={(e) => setInputcategorie(e.target.value)}
-								/>
-								<div>
-									<button
-										type="button"
-										onClick={AddCategorie}
-										class="btn btn-primary ms-3"
-									>
-										Ajouter
-									</button>
-								</div>
-							</div>
-						</section>
-					</section>
-				</section>
-			</main>
-			{afficheCategorie} */
 }
