@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 import "./Carnets.css";
 import Carn from "./SwitchMode";
-// import CarnetsExist from "./CarnetExist";
 
 export default function Carnets() {
 	const [active, setActive] = useState("CardsCarn");
@@ -158,11 +157,6 @@ export default function Carnets() {
 		);
 	});
 	const afficheCards = <div className="carton"> {afficheCarnetCards}</div>;
-
-	// if (CarnetsExist(carnet, carnets)) {
-	// 	alert("Produit déjà existant");
-	// 	return false;
-	// }
 
 	return (
 		<div className="App">
