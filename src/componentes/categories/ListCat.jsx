@@ -1,4 +1,9 @@
-export default function ListCat({ categorie, supprimer }) {
+export default function ListCat({
+	categorie,
+	categorieTitre,
+	handleEditClick,
+	handleDeleteClick,
+}) {
 	return (
 		<div>
 			<main>
@@ -6,12 +11,18 @@ export default function ListCat({ categorie, supprimer }) {
 					<section className="row">
 						<section className="col-md-8">
 							<li className="list-group-item  d-flex justify-content-between align-items-center mt-3">
-								<b>{categorie}</b>
+								<b>{categorieTitre}</b>
 
 								<span>
 									<button
-										className="btn btn-danger mt-2"
-										onClick={() => supprimer(categorie)}
+										className="btn btn-warning "
+										onClick={() => handleEditClick(categorie)}
+									>
+										Modifier
+									</button>
+									<button
+										className="btn btn-danger ms-3"
+										onClick={() => handleDeleteClick(categorie.id)}
 									>
 										Supprimer
 									</button>

@@ -33,14 +33,15 @@ export default function NavBar() {
 									<b>Home</b>
 								</Nav.Link>
 							</li>
-							<li className="nav-item active">
-								<Nav.Link as={NavLink} to="/Carnets">
-									<b>Carnets</b>
-								</Nav.Link>
-							</li>
+
 							<li className="nav-item">
 								<Nav.Link as={NavLink} to="/AjoutCategorie">
 									<b>Catégories</b>
+								</Nav.Link>
+							</li>
+							<li className="nav-item active">
+								<Nav.Link as={NavLink} to="/Carnets">
+									<b>Carnets</b>
 								</Nav.Link>
 							</li>
 						</ul>

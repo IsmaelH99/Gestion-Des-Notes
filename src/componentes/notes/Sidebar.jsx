@@ -61,7 +61,7 @@ function Sidebar({
 	return (
 		<div className="app-sidebar">
 			<div className="app-sidebar-header">
-				<h1>Notes de {carnet && carnet.titreCarnet}</h1>
+				<h1>Notes de {carnet && carnet.text}</h1>
 
 				<button type="button" onClick={OnAddNote} class="btn btn-success">
 					Ajouter

@@ -1,79 +1,99 @@
-import { useState, useEffect } from "react";
-import NavBar from "../navbar/NavBar";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import NavBar from "../navbar/NavBar";
 import "./Carnets.css";
-import { v4 as uuidv4 } from "uuid";
-import React from "react";
 import Carn from "./SwitchMode";
 
 export default function Carnets() {
-	const [carnets, setCarnets] = useState([]);
-
-	const [inputCarnets, setInputCarnets] = useState("");
 	const [active, setActive] = useState("CardsCarn");
+
+	const [carnets, setCarnets] = useState(() => {
+		const savedCarnets = localStorage.getItem("carnets");
+		if (savedCarnets) {
+			return JSON.parse(savedCarnets);
+		} else {
+			return [];
+		}
+	});
+	const [carnet, setCarnet] = useState("");
+	const [isEditing, setIsEditing] = useState(false);
+	const [currentCarnet, setCurrentCarnet] = useState({});
+
+	useEffect(() => {
+		localStorage.setItem("carnets", JSON.stringify(carnets));
+	}, [carnets]);
 
 	const [rech, setRech] = useState("");
 
 	function rechercher(strRech, liste) {
 		let tmpRech = strRech.toLowerCase();
 		let res = liste.filter((car) => {
-			let lowerCarnetTitre = car.titreCarnet.toLowerCase();
+			let lowerCarnetTitre = car.text.toLowerCase();
 
 			if (lowerCarnetTitre.indexOf(tmpRech) > -1) return car;
 		});
 		return res;
 	}
-	// const [titreCarnet, setTitreCarnet] = useState("");
-	// useEffect(() => {
-	// 	setTitreCarnet(localStorage.getItem("carnets"));
-	// }, []);
-	useEffect(() => {
-		let carnetsBDD = localStorage.getItem("carnets");
-		if (carnetsBDD === null) {
-			localStorage.setItem("carnets", JSON.stringify([]));
-			carnetsBDD = [];
+
+	function handleInputChange(e) {
+		setCarnet(e.target.value);
+	}
+
+	function handleEditInputChange(e) {
+		setCurrentCarnet({ ...currentCarnet, text: e.target.value });
+		console.log(currentCarnet);
+	}
+
+	function handleFormSubmit(e) {
+		e.preventDefault();
+
+		if (carnet !== "") {
+			setCarnets([
+				...carnets,
+				{
+					id: carnets.length + 1,
+					text: carnet.trim(),
+				},
+			]);
 		}
-		setCarnets(JSON.parse(carnetsBDD));
-	}, []);
 
-	useEffect(() => {
-		localStorage.setItem("carnets", JSON.stringify(carnets));
-	}, [carnets]);
-
-	function AddCarnets() {
-		let tmp = [...carnets];
-		if (inputCarnets.trim().length > 0) {
-			tmp.push({
-				id: uuidv4(),
-				titreCarnet: inputCarnets,
-				notesCarnet: [],
-			});
-			setCarnets(tmp);
-			console.log(tmp);
-		}
-		setInputCarnets("");
-	}
-	function supprimer(carnet) {
-		let tmp = [...carnets];
-		const indice = carnets.indexOf(carnet);
-		console.log(indice);
-		if (indice > -1) tmp.splice(indice, 1);
-		setCarnets(tmp);
+		setCarnet("");
 	}
 
-	function Enregistrer(carnet) {
-		let tmpEnr = [...carnets];
-		setCarnets(tmpEnr);
+	function handleEditFormSubmit(e) {
+		e.preventDefault();
+
+		handleUpdateCarnet(currentCarnet.id, currentCarnet);
 	}
-	function Modifier() {}
-	let afficheCarnetCards = rechercher(rech, carnets).map((carnet, i) => {
+
+	function handleDeleteClick(id) {
+		const removeItem = carnets.filter((carnet) => {
+			return carnet.id !== id;
+		});
+		setCarnets(removeItem);
+	}
+
+	function handleUpdateCarnet(id, updatedCarnet) {
+		const updatedItem = carnets.map((carnet) => {
+			return carnet.id === id ? updatedCarnet : carnet;
+		});
+		setIsEditing(false);
+		setCarnets(updatedItem);
+	}
+
+	function handleEditClick(carnet) {
+		setIsEditing(true);
+		setCurrentCarnet({ ...carnet });
+	}
+
+	let afficheCarnetCards = rechercher(rech, carnets).map((carnet) => {
 		return (
-			<div key={"carnetsCards-" + i} className="mt-3 ms-3 ">
+			<div key={carnet.id} className="mt-3 ms-3 ">
 				<div class="col-md-12 ">
 					<div class="card h-100 ">
 						<div class="card-header text-center">
-							<Link to={`/carnet/${carnet.id}`}>
-								<b>{carnet.titreCarnet}</b>
+							<Link to={`/carnet/${carnet.text}`}>
+								<b>{carnet.text}</b>
 							</Link>
 						</div>
 						<div class="card-body text-white bg-secondary">
@@ -83,45 +103,42 @@ export default function Carnets() {
 					</div>
 				</div>
 
-				<Link to={`/carnet/Modif/${carnet.id}`}>
-					<button
-						className="btn btn-warning mt-2"
-						onClick={() => Modifier(carnet)}
-					>
-						Modifier
-					</button>
-				</Link>
+				<button
+					className="btn btn-warning mt-2"
+					onClick={() => handleEditClick(carnet)}
+				>
+					Modifier
+				</button>
+
 				<button
 					className="btn btn-danger mt-2 ms-3"
-					onClick={() => supprimer(carnet)}
+					onClick={() => handleDeleteClick(carnet.id)}
 				>
 					Supprimer
 				</button>
 			</div>
 		);
 	});
-	let afficheCarnetListe = carnets.map((carnet, i) => {
+	let afficheCarnetListe = rechercher(rech, carnets).map((carnet) => {
 		return (
-			<main key={"carnetsList-" + i}>
+			<main key={carnet.id}>
 				<section className="container">
 					<section className="row">
 						<section className="col-md-10">
 							<li className="list-group-item  d-flex justify-content-between align-items-center mt-3">
-								<Link to={`/carnet/${carnet.id}`}>
-									<b>{carnet.titreCarnet}</b>
+								<Link to={`/carnet/${carnet.text}`}>
+									<b>{carnet.text}</b>
 								</Link>
 								<span>
-									<Link to="/carnet/ModifierCarnet">
-										<button
-											className="btn btn-warning mt-2"
-											onClick={() => Modifier(carnet)}
-										>
-											Modifier
-										</button>
-									</Link>
+									<button
+										className="btn btn-warning mt-2"
+										onClick={() => handleEditClick(carnet)}
+									>
+										Modifier
+									</button>
 									<button
 										className="btn btn-danger mt-2 ms-3"
-										onClick={() => supprimer(carnet)}
+										onClick={() => handleDeleteClick(carnet.id)}
 									>
 										Supprimer
 									</button>
@@ -136,10 +153,44 @@ export default function Carnets() {
 	const afficheCards = <div className="carton"> {afficheCarnetCards}</div>;
 
 	return (
-		<div>
-			<NavBar /*titreCarnet={titreCarnet} carnets={carnets} */ />
-			<div class="carnet_scrollbar carnet_scrollbar-primary">
-				<div class="carnet_force-overflow">
+		<div className="App">
+			<NavBar />
+
+			{isEditing ? (
+				<form onSubmit={handleEditFormSubmit}>
+					<main>
+						<section className="container">
+							<section className="row">
+								<section className="col-md-8">
+									<h1 className="mt-Carnet">Modifer un carnet</h1>
+									<div className="input-group mb-3 mt-3">
+										<input
+											name="modifier"
+											className="form-control"
+											type="text"
+											placeholder="Modifier"
+											value={currentCarnet.text}
+											onChange={handleEditInputChange}
+										/>
+									</div>
+									<div>
+										<button
+											className="btn btn-secondary "
+											onClick={() => setIsEditing(false)}
+										>
+											Annuler
+										</button>
+										<button className="btn btn-success ms-3" type="submit">
+											Enregistrer
+										</button>
+									</div>
+								</section>
+							</section>
+						</section>
+					</main>
+				</form>
+			) : (
+				<form onSubmit={handleFormSubmit}>
 					<main>
 						<section className="container">
 							<section className="row">
@@ -147,74 +198,70 @@ export default function Carnets() {
 									<h1 className="mt-Carnet">Ajout d'un carnet</h1>
 									<div className="input-group mb-3 mt-3">
 										<input
+											className="form-control"
+											name="carnet"
 											type="text"
-											class="form-control"
-											placeholder="Ajouter un carnet "
-											aria-label="Recipient's username"
-											aria-describedby="button-addon2"
-											value={inputCarnets}
-											onChange={(e) => setInputCarnets(e.target.value)}
+											placeholder="Ajouter un carnet"
+											value={carnet}
+											onChange={handleInputChange}
 										/>
 										<div>
-											<button
-												type="button"
-												onClick={AddCarnets}
-												className="btn btn-primary ms-3"
-											>
+											<button type="submit" className="btn btn-primary ms-3">
 												Ajouter
 											</button>
 										</div>
 									</div>
-									{carnets.length > 0 && (
-										<div className="col-md-6">
-											<input
-												type="search"
-												value={rech}
-												onChange={(e) => {
-													setRech(e.target.value);
-												}}
-												className="form-control"
-												placeholder="Rechercher ..."
-											/>
-										</div>
-									)}
-
-									{carnets.length > 0 && (
-										<div className="mb-4 mt-3">
-											<b>Nombre de carnets totals </b>
-											<span className="nb-pro badge rounded-pill bg-info text-dark">
-												<b>{carnets.length}</b>
-											</span>
-										</div>
-									)}
-									{carnets.length > 0 && (
-										<nav>
-											<button
-												className="btn btn-info"
-												onClick={() => setActive("CardsCarn")}
-											>
-												Cards
-											</button>
-											<button
-												className="btn btn-primary ms-3"
-												onClick={() => setActive("ListesCarn")}
-											>
-												Listes
-											</button>
-										</nav>
-									)}
-									<div>
-										{active === "CardsCarn" && <Carn title={afficheCards} />}
-										{active === "ListesCarn" && (
-											<Carn title={afficheCarnetListe} />
+									<div className="mt-3">
+										{carnets.length > 0 && (
+											<div className="col-md-5 mb-3">
+												<input
+													type="search"
+													value={rech}
+													onChange={(e) => {
+														setRech(e.target.value);
+													}}
+													className="form-control"
+													placeholder="Rechercher ..."
+												/>
+											</div>
 										)}
+										{carnets.length > 0 && (
+											<div className="mb-4 mt-3">
+												<b>Nombre de carnets totals </b>
+												<span className="nb-pro badge rounded-pill bg-info text-dark">
+													<b>{carnets.length}</b>
+												</span>
+											</div>
+										)}
+										{carnets.length > 0 && (
+											<nav>
+												<button
+													className="btn btn-info"
+													onClick={() => setActive("CardsCarn")}
+												>
+													Cards
+												</button>
+												<button
+													className="btn btn-primary ms-3"
+													onClick={() => setActive("ListesCarn")}
+												>
+													Listes
+												</button>
+											</nav>
+										)}
+										<div>
+											{active === "CardsCarn" && <Carn title={afficheCards} />}
+											{active === "ListesCarn" && (
+												<Carn title={afficheCarnetListe} />
+											)}
+										</div>
 									</div>
 								</section>
 							</section>
 						</section>
 					</main>
-				</div>
-			</div>
+				</form>
+			)}
 		</div>
 	);
 }

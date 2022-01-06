@@ -54,7 +54,7 @@ function AjouterNotes() {
 	const OnAddNote = () => {
 		const newNote = {
 			idCarnet: { id },
-			id: uuidv4(),
+			id: notes.length + 1,
 			title: "Note sans titre",
 			categorie: "",
 			body: "",
